@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const destination = destinationInput.value.trim()
 
     if (!origin || !destination) {
-      alert("Por favor completa ambos campos")
+      alert("Por favor selecciona un punto de inicio y un destino")
+      return
+    }
+
+    if (origin === destination) {
+      alert("El punto de inicio y destino deben ser diferentes")
       return
     }
 

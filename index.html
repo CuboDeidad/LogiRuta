@@ -76,12 +76,28 @@
             <section class="calculator-section">
                 <div class="form-group">
                     <label for="origin">Punto de inicio</label>
-                    <input type="text" id="origin" class="input-field" placeholder="Selecciona la primera fábrica">
+                    <!-- Changed from text input to dropdown selector -->
+                    <select id="origin" class="input-field">
+                        <option value="">Selecciona la primera fábrica</option>
+                        <option value="fabrica-norte">Fábrica Norte - Bogotá</option>
+                        <option value="fabrica-sur">Fábrica Sur - Cali</option>
+                        <option value="fabrica-oriente">Fábrica Oriente - Medellín</option>
+                        <option value="fabrica-occidente">Fábrica Occidente - Barranquilla</option>
+                        <option value="fabrica-centro">Fábrica Centro - Bucaramanga</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="destination">Destino</label>
-                    <input type="text" id="destination" class="input-field" placeholder="Selecciona la fábrica donde llegar">
+                    <!-- Changed from text input to dropdown selector -->
+                    <select id="destination" class="input-field">
+                        <option value="">Selecciona la fábrica donde llegar</option>
+                        <option value="fabrica-norte">Fábrica Norte - Bogotá</option>
+                        <option value="fabrica-sur">Fábrica Sur - Cali</option>
+                        <option value="fabrica-oriente">Fábrica Oriente - Medellín</option>
+                        <option value="fabrica-occidente">Fábrica Occidente - Barranquilla</option>
+                        <option value="fabrica-centro">Fábrica Centro - Bucaramanga</option>
+                    </select>
                 </div>
 
                 <div class="button-group">
