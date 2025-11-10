@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiRuta - Cálculo de Distancias de Transporte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span>LogiRuta</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">Inicio</a>
+                <a href="#" class="nav-item">Rutas</a>
+                <a href="#" class="nav-item">Fábricas</a>
+                <a href="#" class="nav-item">Configuración</a>
+            </nav>
+
+            <div class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <svg class="map-pattern" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <rect width="1200" height="300" fill="url(#grad1)"/>
+            
+            <!-- Geometric pattern -->
+            <polygon points="0,0 200,0 150,150 0,150" fill="#e8e8e8" opacity="0.6"/>
+            <polygon points="150,0 350,0 250,150 100,150" fill="#d4d4d4" opacity="0.5"/>
+            <polygon points="300,0 550,0 450,200 200,200" fill="#e8e8e8" opacity="0.4"/>
+            <polygon points="500,0 800,0 700,200 450,200" fill="#d4d4d4" opacity="0.5"/>
+            <polygon points="750,0 1200,0 1200,200 800,200" fill="#e8e8e8" opacity="0.3"/>
+            
+            <polygon points="0,150 150,150 200,300 0,300" fill="#d4d4d4" opacity="0.5"/>
+            <polygon points="100,150 350,150 400,300 200,300" fill="#e8e8e8" opacity="0.4"/>
+            <polygon points="250,200 550,200 600,300 400,300" fill="#d4d4d4" opacity="0.4"/>
+            <polygon points="450,200 800,200 900,300 600,300" fill="#e8e8e8" opacity="0.3"/>
+            <polygon points="800,200 1200,200 1200,300 900,300" fill="#d4d4d4" opacity="0.3"/>
+            
+            <!-- Location marker -->
+            <circle cx="600" cy="150" r="6" fill="#999" opacity="0.8"/>
+        </svg>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <h2>Calcular distancia</h2>
+            <p class="sidebar-subtitle">Selecciona entre 2 fábricas de nuestra lista para empezar</p>
+        </aside>
+
+        <!-- Right Content -->
+        <main class="content">
+            <!-- Route Calculator Form -->
+            <section class="calculator-section">
+                <div class="form-group">
+                    <label for="origin">Punto de inicio</label>
+                    <input type="text" id="origin" class="input-field" placeholder="Selecciona la primera fábrica">
+                </div>
+
+                <div class="form-group">
+                    <label for="destination">Destino</label>
+                    <input type="text" id="destination" class="input-field" placeholder="Selecciona la fábrica donde llegar">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" id="clearBtn">Borrar</button>
+                    <button class="btn btn-primary" id="calculateBtn">Calcular ruta</button>
+                </div>
+            </section>
+
+            <!-- Transport Details -->
+            <section class="details-section">
+                <h3>Detalles de transporte</h3>
+                
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6h4"/>
+                            </svg>
+                        </div>
+                        <p class="detail-label">Tiempo estimado</p>
+                        <p class="detail-value">23 min</p>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <!-- Replaced with road/path icon for distance -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 3v18M18 3v18M9 3h6v3h-6V3M9 8h6v3h-6V8M9 13h6v3h-6v-3M9 18h6v2h-6v-2"/>
+                            </svg>
+                        </div>
+                        <p class="detail-label">Distancia Total</p>
+                        <p class="detail-value">7.2 km</p>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <!-- Replaced with thermometer icon for temperature -->
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v10M12 18c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                                <line x1="12" y1="12" x2="12" y2="18"/>
+                            </svg>
+                        </div>
+                        <p class="detail-label">Temperatura</p>
+                        <p class="detail-value">4°</p>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                <line x1="8" y1="8" x2="16" y2="8"/>
+                                <line x1="8" y1="12" x2="16" y2="12"/>
+                            </svg>
+                        </div>
+                        <p class="detail-label">Duración productos</p>
+                        <p class="detail-value">8 meses</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 LogiRuta</p>
+        <div class="footer-links">
+            <a href="#">Políticas de Privacidad</a>
+            <a href="#">Términos de Servicio</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
