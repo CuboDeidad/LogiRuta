@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogiRuta - Cálculo de Distancias de Transporte</title>
     <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <!-- Header -->
@@ -32,33 +33,9 @@
         </div>
     </header>
 
-    <!-- Map Section -->
+    <!-- Map Section (Leaflet) -->
     <section class="map-section">
-        <svg class="map-pattern" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            <rect width="1200" height="300" fill="url(#grad1)"/>
-            
-            <!-- Geometric pattern -->
-            <polygon points="0,0 200,0 150,150 0,150" fill="#e8e8e8" opacity="0.6"/>
-            <polygon points="150,0 350,0 250,150 100,150" fill="#d4d4d4" opacity="0.5"/>
-            <polygon points="300,0 550,0 450,200 200,200" fill="#e8e8e8" opacity="0.4"/>
-            <polygon points="500,0 800,0 700,200 450,200" fill="#d4d4d4" opacity="0.5"/>
-            <polygon points="750,0 1200,0 1200,200 800,200" fill="#e8e8e8" opacity="0.3"/>
-            
-            <polygon points="0,150 150,150 200,300 0,300" fill="#d4d4d4" opacity="0.5"/>
-            <polygon points="100,150 350,150 400,300 200,300" fill="#e8e8e8" opacity="0.4"/>
-            <polygon points="250,200 550,200 600,300 400,300" fill="#d4d4d4" opacity="0.4"/>
-            <polygon points="450,200 800,200 900,300 600,300" fill="#e8e8e8" opacity="0.3"/>
-            <polygon points="800,200 1200,200 1200,300 900,300" fill="#d4d4d4" opacity="0.3"/>
-            
-            <!-- Location marker -->
-            <circle cx="600" cy="150" r="6" fill="#999" opacity="0.8"/>
-        </svg>
+        <div id="map"></div>
     </section>
 
     <!-- Main Content -->
@@ -67,6 +44,7 @@
         <aside class="sidebar">
             <h2>Calcular distancia</h2>
             <p class="sidebar-subtitle">Selecciona entre 2 fábricas de nuestra lista para empezar</p>
+            
         </aside>
 
         <!-- Right Content -->
@@ -74,16 +52,32 @@
             <!-- Route Calculator Form -->
             <section class="calculator-section">
                 <div class="form-group">
+                    <label for="companySelect">Empresa</label>
+                    <select id="companySelect" class="input-field">
+                        <option value="alicorp">Alicorp</option>
+                        <option value="gloria">Gloria</option>
+                        <option value="backus">Backus</option>
+                        <option value="nestle">Nestlé</option>
+                        <option value="ajeper">AJEPER</option>
+                        <option value="sanfernando">San Fernando</option>
+                        <option value="otras">Otras (próximamente)</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="origin">Punto de inicio</label>
                     <!-- Changed from text input to dropdown selector -->
-                    <select id="origin" class="input-field">
-                        <option value="">Selecciona la primera fábrica</option>
-                        <option value="fabrica-norte">Fábrica Norte - Bogotá</option>
-                        <option value="fabrica-sur">Fábrica Sur - Cali</option>
-                        <option value="fabrica-oriente">Fábrica Oriente - Medellín</option>
-                        <option value="fabrica-occidente">Fábrica Occidente - Barranquilla</option>
-                        <option value="fabrica-centro">Fábrica Centro - Bucaramanga</option>
-                    </select>
+                        <select id="origin" class="input-field">
+                            <option value="">Selecciona la primera fábrica</option>
+                            <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
+                            <option value="molino_arequipa">Planta Molino Arequipa</option>
+                            <option value="predio_callao">Predio Central – Callao</option>
+                            <option value="molino_callao">Planta Molino Callao</option>
+                            <option value="intradevco_ventanilla">Planta Intradevco – Ventanilla</option>
+                            <option value="sayon_ate">Planta Sayón – Ate</option>
+                            <option value="nana_chaclacayo">Planta Ñaña – Chaclacayo</option>
+                            <option value="molino_paita">Planta Molino Paita – Paita</option>
+                            <option value="nicovita_moche">Planta Nicovita – Moche (Trujillo)</option>
+                        </select>
                 </div>
 
                 <div class="form-group">
@@ -91,11 +85,15 @@
                     <!-- Changed from text input to dropdown selector -->
                     <select id="destination" class="input-field">
                         <option value="">Selecciona la fábrica donde llegar</option>
-                        <option value="fabrica-norte">Fábrica Norte - Bogotá</option>
-                        <option value="fabrica-sur">Fábrica Sur - Cali</option>
-                        <option value="fabrica-oriente">Fábrica Oriente - Medellín</option>
-                        <option value="fabrica-occidente">Fábrica Occidente - Barranquilla</option>
-                        <option value="fabrica-centro">Fábrica Centro - Bucaramanga</option>
+                        <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
+                        <option value="molino_arequipa">Planta Molino Arequipa</option>
+                        <option value="predio_callao">Predio Central – Callao</option>
+                        <option value="molino_callao">Planta Molino Callao</option>
+                        <option value="intradevco_ventanilla">Planta Intradevco – Ventanilla</option>
+                        <option value="sayon_ate">Planta Sayón – Ate</option>
+                        <option value="nana_chaclacayo">Planta Ñaña – Chaclacayo</option>
+                        <option value="molino_paita">Planta Molino Paita – Paita</option>
+                        <option value="nicovita_moche">Planta Nicovita – Moche (Trujillo)</option>
                     </select>
                 </div>
 
@@ -104,6 +102,7 @@
                     <button class="btn btn-primary" id="calculateBtn">Calcular ruta</button>
                 </div>
             </section>
+            
 
             <!-- Transport Details -->
             <section class="details-section">
@@ -118,7 +117,7 @@
                             </svg>
                         </div>
                         <p class="detail-label">Tiempo estimado</p>
-                        <p class="detail-value">23 min</p>
+                        <p class="detail-value" id="timeValue">—</p>
                     </div>
 
                     <div class="detail-card">
@@ -129,7 +128,7 @@
                             </svg>
                         </div>
                         <p class="detail-label">Distancia Total</p>
-                        <p class="detail-value">7.2 km</p>
+                        <p class="detail-value" id="distanceValue">—</p>
                     </div>
 
                     <div class="detail-card">
@@ -169,6 +168,7 @@
         </div>
     </footer>
 
-    <script src="src/script.js"></script>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="src/script.js"></script>
 </body>
 </html>
