@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogiRuta - Cálculo de Distancias de Transporte</title>
     <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <!-- Header -->
@@ -13,8 +13,8 @@
         <div class="header-container">
             <div class="logo">
                 <a href="index.html">
-                        <img src="assets/logiruta.png" alt="Logiruta Logo" class="nav_logo_img">
-                    </a>
+                    <img src="assets/logiruta.png" alt="Logiruta Logo" class="nav_logo_img">
+                </a>
             </div>
             
             <nav class="nav-menu">
@@ -44,7 +44,6 @@
         <aside class="sidebar">
             <h2>Calcular distancia</h2>
             <p class="sidebar-subtitle">Selecciona entre 2 fábricas de nuestra lista para empezar</p>
-            
         </aside>
 
         <!-- Right Content -->
@@ -63,21 +62,48 @@
                         <option value="otras">Otras (próximamente)</option>
                     </select>
                 </div>
+
+                <!-- NUEVO: selección de productos según empresa -->
+                <div class="form-group">
+  <label class="product-label">Productos</label>
+
+  <div class="product-container">
+    <div class="product-select-box">
+      <div class="custom-multiselect">
+        <div class="select-box" id="productPlaceholder">
+          Seleccionar productos
+        </div>
+
+        <div class="checkbox-list" id="productDropdown">
+          <!-- productos dinámicos -->
+        </div>
+      </div>
+    </div>
+
+    <div class="selected-products" id="selectedProducts"></div>
+  </div>
+
+  <small class="helper-text">
+    Puedes seleccionar uno o varios productos de la empresa seleccionada
+  </small>
+</div>
+
+
                 <div class="form-group">
                     <label for="origin">Punto de inicio</label>
                     <!-- Changed from text input to dropdown selector -->
-                        <select id="origin" class="input-field">
-                            <option value="">Selecciona la primera fábrica</option>
-                            <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
-                            <option value="molino_arequipa">Planta Molino Arequipa</option>
-                            <option value="predio_callao">Predio Central – Callao</option>
-                            <option value="molino_callao">Planta Molino Callao</option>
-                            <option value="intradevco_ventanilla">Planta Intradevco – Ventanilla</option>
-                            <option value="sayon_ate">Planta Sayón – Ate</option>
-                            <option value="nana_chaclacayo">Planta Ñaña – Chaclacayo</option>
-                            <option value="molino_paita">Planta Molino Paita – Paita</option>
-                            <option value="nicovita_moche">Planta Nicovita – Moche (Trujillo)</option>
-                        </select>
+                    <select id="origin" class="input-field">
+                        <option value="">Selecciona la primera fábrica</option>
+                        <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
+                        <option value="molino_arequipa">Planta Molino Arequipa</option>
+                        <option value="predio_callao">Predio Central – Callao</option>
+                        <option value="molino_callao">Planta Molino Callao</option>
+                        <option value="intradevco_ventanilla">Planta Intradevco – Ventanilla</option>
+                        <option value="sayon_ate">Planta Sayón – Ate</option>
+                        <option value="nana_chaclacayo">Planta Ñaña – Chaclacayo</option>
+                        <option value="molino_paita">Planta Molino Paita – Paita</option>
+                        <option value="nicovita_moche">Planta Nicovita – Moche (Trujillo)</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -103,7 +129,6 @@
                 </div>
             </section>
             
-
             <!-- Transport Details -->
             <section class="details-section">
                 <h3>Detalles de transporte</h3>
@@ -133,14 +158,15 @@
 
                     <div class="detail-card">
                         <div class="detail-icon">
-                            <!-- Replaced with thermometer icon for temperature -->
+                            <!-- Termómetro -->
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 2v10M12 18c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
                                 <line x1="12" y1="12" x2="12" y2="18"/>
                             </svg>
                         </div>
                         <p class="detail-label">Temperatura</p>
-                        <p class="detail-value">4°</p>
+                        <!-- CAMBIADO: ahora dinámico -->
+                        <p class="detail-value" id="temperatureValue">—</p>
                     </div>
 
                     <div class="detail-card">
@@ -152,7 +178,8 @@
                             </svg>
                         </div>
                         <p class="detail-label">Duración productos</p>
-                        <p class="detail-value">8 meses</p>
+                        <!-- CAMBIADO: ahora dinámico -->
+                        <p class="detail-value" id="durationValue">—</p>
                     </div>
                 </div>
             </section>
@@ -168,7 +195,7 @@
         </div>
     </footer>
 
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <script src="src/script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="src/script.js"></script>
 </body>
 </html>
