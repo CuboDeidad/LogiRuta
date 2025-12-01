@@ -33,22 +33,20 @@
         </div>
     </header>
 
-    <!-- Map Section (Leaflet) -->
+    <!-- Map Section-->
     <section class="map-section">
         <div id="map"></div>
     </section>
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Left Sidebar -->
         <aside class="sidebar">
             <h2>Calcular distancia</h2>
             <p class="sidebar-subtitle">Selecciona entre 2 fábricas de nuestra lista para empezar</p>
         </aside>
 
-        <!-- Right Content -->
+
         <main class="content">
-            <!-- Route Calculator Form -->
             <section class="calculator-section">
                 <div class="form-group">
                     <label for="companySelect">Empresa</label>
@@ -63,7 +61,6 @@
                     </select>
                 </div>
 
-                <!-- NUEVO: selección de productos según empresa -->
                 <div class="form-group">
   <label class="product-label">Productos</label>
 
@@ -75,7 +72,6 @@
         </div>
 
         <div class="checkbox-list" id="productDropdown">
-          <!-- productos dinámicos -->
         </div>
       </div>
     </div>
@@ -91,7 +87,6 @@
 
                 <div class="form-group">
                     <label for="origin">Punto de inicio</label>
-                    <!-- Changed from text input to dropdown selector -->
                     <select id="origin" class="input-field">
                         <option value="">Selecciona la primera fábrica</option>
                         <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
@@ -108,7 +103,6 @@
 
                 <div class="form-group">
                     <label for="destination">Destino</label>
-                    <!-- Changed from text input to dropdown selector -->
                     <select id="destination" class="input-field">
                         <option value="">Selecciona la fábrica donde llegar</option>
                         <option value="sidsur_arequipa">Planta Sidsur – Arequipa</option>
@@ -129,7 +123,6 @@
                 </div>
             </section>
             
-            <!-- Transport Details -->
             <section class="details-section">
                 <h3>Detalles de transporte</h3>
                 
@@ -147,7 +140,6 @@
 
                     <div class="detail-card">
                         <div class="detail-icon">
-                            <!-- Replaced with road/path icon for distance -->
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M6 3v18M18 3v18M9 3h6v3h-6V3M9 8h6v3h-6V8M9 13h6v3h-6v-3M9 18h6v2h-6v-2"/>
                             </svg>
@@ -158,14 +150,12 @@
 
                     <div class="detail-card">
                         <div class="detail-icon">
-                            <!-- Termómetro -->
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 2v10M12 18c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
                                 <line x1="12" y1="12" x2="12" y2="18"/>
                             </svg>
                         </div>
                         <p class="detail-label">Temperatura</p>
-                        <!-- CAMBIADO: ahora dinámico -->
                         <p class="detail-value" id="temperatureValue">—</p>
                     </div>
 
@@ -178,7 +168,6 @@
                             </svg>
                         </div>
                         <p class="detail-label">Duración productos</p>
-                        <!-- CAMBIADO: ahora dinámico -->
                         <p class="detail-value" id="durationValue">—</p>
                     </div>
                 </div>

@@ -92,7 +92,6 @@ FACTORIES.gloria_trujillo = {
   lng: -79.016842
 };
 
-// BACKUS facilities
 FACTORIES.backus_ate = {
   name: 'Planta Backus – Ate (Lima)',
   address: 'Av. Nicolás Ayllón 4050, Ate-Vitarte, Lima',
@@ -118,7 +117,6 @@ FACTORIES.backus_arequipa = {
   lng: -71.54
 };
 
-// NESTLE facilities
 FACTORIES.nestle_callao = {
   name: 'Planta Nestlé – Callao',
   address: 'Av. Elmer Faucett 3000, Callao, Lima',
@@ -144,7 +142,6 @@ FACTORIES.nestle_chiclayo = {
   lng: -79.868259
 };
 
-// AJEPER facilities
 FACTORIES.ajeper_huachipa = {
   name: 'Planta Huachipa',
   address: 'AJEPER Huachipa',
@@ -194,7 +191,6 @@ FACTORIES.ajeper_iquitos = {
   lng: -73.269214
 };
 
-// SAN FERNANDO facilities
 FACTORIES.sanfernando_ventanilla = {
   name: 'Planta San Fernando – Ventanilla',
   address: 'Av. Néstor Gambetta km 15.5, Ventanilla, Callao',
@@ -658,7 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
     durationValue.textContent = minDur + ' meses';
   }
 
-  // Ordenar empresas alfabéticamente excepto 'otras' (próximamente)
+  // Ordenar empresas alfabéticamente 
   function fillCompanySelect() {
     const keys = Object.keys(COMPANIES).filter(k => k !== 'otras');
     keys.sort((a, b) => {
@@ -695,13 +691,12 @@ document.addEventListener("DOMContentLoaded", () => {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  // Añadir marcadores de fábricas
+
   const markers = {};
   Object.keys(FACTORIES).forEach((id) => {
     const f = FACTORIES[id];
     const m = L.marker([f.lat, f.lng]).addTo(map).bindPopup(f.name);
     m.on('click', () => {
-      // Si no hay origin, setearlo; sino setear destination si es distinto
       if (!originInput.value) {
         originInput.value = id;
       } else if (!destinationInput.value && originInput.value !== id) {
@@ -713,20 +708,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let routeLine = null;
 
-  // Limpieza general de temperatura/duración y lista de productos
+
   function resetProductDetails() {
     if (temperatureValue) temperatureValue.textContent = '—';
     if (durationValue) durationValue.textContent = '—';
     if (selectedProductsContainer) selectedProductsContainer.innerHTML = '';
   }
 
-  // Clear button functionality
+
   clearBtn.addEventListener('click', () => {
     originInput.value = '';
     destinationInput.value = '';
     distanceValue.textContent = '—';
     timeValue.textContent = '—';
-    // limpiar selección de productos
     if (productSelect) {
       Array.from(productSelect.options).forEach(opt => { opt.selected = false; });
     }
@@ -735,12 +729,10 @@ document.addEventListener("DOMContentLoaded", () => {
     originInput.focus();
   });
 
-  // Populate origin/destination selects based on selected company
   function populateSiteSelects(companyKey) {
     const sel = COMPANIES[companyKey] || { sites: [] };
     const sites = sel.sites;
 
-    // helper to clear and add placeholder
     function fill(selectEl) {
       selectEl.innerHTML = '';
       const ph = document.createElement('option');
@@ -761,22 +753,17 @@ document.addEventListener("DOMContentLoaded", () => {
     fill(originInput);
     fill(destinationInput);
 
-    // clear any existing route if the selected origin/destination is no longer valid
     if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
 
-    // Show/hide markers according to selected company
     Object.keys(markers).forEach((k) => {
       const m = markers[k];
       if (sites.includes(k)) {
-        // ensure marker is visible
         if (!map.hasLayer(m)) m.addTo(map);
       } else {
-        // hide marker
         if (map.hasLayer(m)) m.remove();
       }
     });
 
-    // Fit map to visible markers for the selected company
     const visibleKeys = Object.keys(markers).filter(k => sites.includes(k));
     if (visibleKeys.length) {
       const b = visibleKeys.reduce((bounds, k) => {
@@ -787,7 +774,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // NUEVO: llenar productos por empresa
   function populateProductSelect(companyKey) {
     if (!productSelect) return;
     productSelect.innerHTML = '';
@@ -812,12 +798,10 @@ document.addEventListener("DOMContentLoaded", () => {
       productSelect.appendChild(opt);
     });
 
-    // al cambiar de empresa, limpiamos valores
     Array.from(productSelect.options).forEach(o => o.selected = false);
     resetProductDetails();
   }
 
-  // NUEVO: mostrar productos seleccionados a la derecha (versión select)
   function renderSelectedProductsFromSelect(selectedKeys) {
     if (!selectedProductsContainer) return;
     selectedProductsContainer.innerHTML = '';
@@ -838,7 +822,6 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = '-';
 
       btn.addEventListener('click', () => {
-        // deseleccionar en el select
         Array.from(productSelect.options).forEach(opt => {
           if (opt.value === (p.id || p.name)) {
             opt.selected = false;
@@ -854,8 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedProductsContainer.appendChild(tag);
     });
   }
-
-  // Actualizar temperatura/duración en tarjetas en función de productos seleccionados (versión select)
+ 
   function updateProductDetails(selectedKeys) {
     if (!selectedKeys || !selectedKeys.length) {
       resetProductDetails();
@@ -877,16 +859,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (durationValue) durationValue.textContent = `${minDuration} meses`;
   }
 
-  // When company changes, repopulate sites y productos
   companySelect.addEventListener('change', (e) => {
     const key = e.target.value;
     populateSiteSelects(key);
     populateProductSelect(key);
-    // 👉 NUEVO: actualizar dropdown multiselect según la empresa
+
     buildProductDropdown(companySelect.value);
+
+
+    if (distanceValue) distanceValue.textContent = '—';
+    if (timeValue) timeValue.textContent = '—';
+    if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+
+    resetProductDetails();
   });
 
-  // Eventos de cambio de productos (versión select múltiple clásica)
+
   if (productSelect) {
     productSelect.addEventListener('change', () => {
       const selected = Array.from(productSelect.selectedOptions).map(opt => opt.value);
@@ -895,15 +883,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initialize selects with Alicorp
+
   const initialCompany = companySelect.value || DEFAULT_COMPANY;
   populateSiteSelects(initialCompany);
   populateProductSelect(initialCompany);
 
-  // NUEVO: inicializar dropdown multiselect con la empresa actual
+
   buildProductDropdown(companySelect.value);
 
-  // Calculate button functionality
+
   calculateBtn.addEventListener('click', () => {
     const origin = originInput.value;
     const destination = destinationInput.value;
@@ -926,7 +914,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Query OSRM public routing server to get a real street route (driving)
+   
     const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson&alternatives=false`;
     fetch(osrmUrl).then(res => res.json()).then((data) => {
       if (data && data.code === 'Ok' && data.routes && data.routes.length > 0) {
@@ -944,8 +932,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const minutos = Math.round(durationMin % 60);
         timeValue.textContent = `${horas} h ${minutos} min`;
 
-
-        // open popups at origin/destination
         if (markers[origin]) markers[origin].openPopup();
         if (markers[destination]) markers[destination].openPopup();
 
@@ -956,7 +942,6 @@ document.addEventListener("DOMContentLoaded", () => {
           (isFinite(durationMin) ? Math.round(durationMin) + ' min' : 'N/A')
         );
       } else {
-        // fallback to straight-line if OSRM cannot find route
         const distKm = haversine(a.lat, a.lng, b.lat, b.lng);
         if (routeLine) { map.removeLayer(routeLine); }
         routeLine = L.polyline([[a.lat, a.lng], [b.lat, b.lng]], {
@@ -987,17 +972,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Allow Enter key to calculate
   destinationInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       calculateBtn.click();
     }
   });
 
-  // Haversine formula (distance in km)
   function haversine(lat1, lon1, lat2, lon2) {
     function toRad(x) { return x * Math.PI / 180; }
-    const R = 6371; // km
+    const R = 6371; 
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -1008,7 +991,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// --- Graph & algorithms (Kosaraju, condensation, topo, Dijkstra) ---
 const GraphModule = (() => {
   function getNodes() {
     return ['lima','arequipa','trujillo','chiclayo','cusco'];
